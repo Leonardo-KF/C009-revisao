@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="./script.js" defer></script>
+    <link rel="stylesheet" href="./styles.css" />
+    <title>Paletas</title>
+  </head>
+  <body>
+    <div class="Home">
+      <h2>Pesquisar Paleta</h2>
+      <div class="paleta-escolhida-espaco">
+        <div id="paleta-escolhida-input-espaco">
+          <input
+            type="number"
+            id="idPaleta"
+            placeholder="Digite o ID da paleta e clique em 'Escolher'"
+          />
+          <button id="idPaletaButton" onclick="findByIdPaletas()">
+            ESCOLHER
+          </button>
+        </div>
+        <div id="paletaEscolhida"></div>
+      </div>
+      <h2>Adicionar Paleta:</h2>
+
+      <div>
+        <input type="text" id="sabor" placeholder="Sabor" />
+      </div>
+
+      <div>
+        <input type="text" id="descricao" placeholder="Descrição" />
+      </div>
+
+      <div>
+        <input type="text" id="foto" placeholder="Foto" />
+      </div>
+
+      <div>
+        <input type="number" id="preco" placeholder="Preço" />
+      </div>
+
+      <div>
+        <button onclick="submitPaleta()">Enviar</button>
+      </div>
+      <h2>Paletas Disponíveis:</h2>
+      <div class="Home__container">
+        <div class="PaletaLista" id="paletaList"></div>
+      </div>
+    </div>
+    <script src="./script.js"></script>
+  </body>
+</html>
