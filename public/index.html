@@ -18,13 +18,16 @@
             id="idPaleta"
             placeholder="Digite o ID da paleta e clique em 'Escolher'"
           />
-          <button id="idPaletaButton" onclick="findByIdPaletas()">
+          <button id="idPaletaButton" onclick="findPaletaById()">
             ESCOLHER
           </button>
         </div>
         <div id="paletaEscolhida"></div>
       </div>
-      <h2>Adicionar Paleta:</h2>
+      <div>
+        <h2>Adicionar/Editar Paleta:</h2>
+        <input type="hidden" id="id" />
+      </div>
 
       <div>
         <input type="text" id="sabor" placeholder="Sabor" />

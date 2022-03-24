@@ -45,8 +45,16 @@ const findPaletaByIdService = (id) => {
 const createPaletaService = (newPaleta) => {
   const newId = paletas.length + 1;
   newPaleta.id = newId;
-  if (newPaleta.preco < 0) {
-    return null;
+  console.log(newPaleta.sabor === undefined);
+  if (newPaleta === undefined) {
+    throw new Error({ message: 'Nehum dado recebido' });
+  }
+  if (newPaleta.sabor === undefined || newPaleta.sabor === '') {
+    console.log('Rodou validação');
+    throw new Error({ message: 'O sabor deve ser preenchido' });
+  }
+  if (newPaleta.preco <= 0) {
+    throw new Error({ message: 'O preço deve ser maior do que zero' });
   }
   paletas.push(newPaleta);
   return newPaleta;

@@ -247,3 +247,32 @@ html {
     font-size: 1.5em;
   }
 }
+.Acoes {
+  display: flex;
+  justify-content: space-between;
+}
+
+.Acoes__editar,
+.Acoes__deletar {
+  border: none;
+  color: white;
+  border-radius: 5px;
+  font-family: 'Exo', sans-serif;
+  padding: 5px;
+  max-width: 280px;
+  text-align: center;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+  width: 48%;
+}
+
+.Acoes__editar {
+  background-color: blue;
+  width: 100%;
+}
+
+.Acoes__deletar {
+  background-color: red;
+  width: 100%;
+}

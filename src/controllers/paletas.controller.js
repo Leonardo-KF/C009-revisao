@@ -13,8 +13,14 @@ const findPaletaByIdController = (req, res) => {
 
 const createPaletaController = (req, res) => {
   const paleta = req.body;
-  const newPaleta = paletasService.createPaletaService(paleta);
-  res.send(newPaleta);
+  try {
+    const newPaleta = paletasService.createPaletaService(paleta);
+    console.log(newPaleta);
+    res.status(201).send(newPaleta);
+  } catch (err) {
+    console.log(err);
+    res.status(400).send(err);
+  }
 };
 
 const updatePaletaController = (req, res) => {
