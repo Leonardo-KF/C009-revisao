@@ -3,6 +3,7 @@ const cors = require('cors');
 const port = 3001;
 const app = express();
 const route = require('./src/routes/paletas.route');
+
 require('dotenv').config();
 
 const connectToDataBase = require('./src/utils/mongoConnection');
