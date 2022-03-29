@@ -1,51 +1,26 @@
-const paletas = [
-  {
-    id: 1,
-    sabor: 'Açaí com Leite Condensado',
-    descricao:
-      'Quam vulputate dignissim suspendisse in est ante in nibh mauris.',
-    foto: './assets/images/acai-com-leite-condensado.png',
-    preco: 10.0,
-  },
-  {
-    id: 2,
-    sabor: 'Banana com Nutella',
-    descricao:
-      'Quam vulputate dignissim suspendisse in est ante in nibh mauris.',
-    foto: './assets/images/banana-com-nutella.png',
-    preco: 10.0,
-  },
-  {
-    id: 3,
-    sabor: 'Chocolate Belga',
-    descricao:
-      'Quam vulputate dignissim suspendisse in est ante in nibh mauris.',
-    foto: './assets/images/chocolate-belga.png',
-    preco: 7.0,
-  },
-];
+const paleta = require('../utils/models/paletaSchema');
 
-const findPaletasService = () => {
-  return paletas;
+const findPaletasService = async () => {
+  const paletas = await paleta.find();
+  if (paletas !== undefined) {
+    return paletas;
+  } else {
+    throw new Error({ message: 'Erro ao encontrar as paletas' });
+  }
 };
 
-const findPaletaByIdService = (id) => {
-  const paleta = paletas.find((objeto) => {
-    objeto.id == id;
-  });
-
-  if (paleta === undefined) {
+const findPaletaByIdService = async (id) => {
+  const paletaById = await paleta.findById(id);
+  console.log(paletaById);
+  if (paletaById === undefined) {
     console.log('Nenhuma paleta foi encontrada');
     return undefined;
   }
 
-  return paleta;
+  return paletaById;
 };
 
-const createPaletaService = (newPaleta) => {
-  const newId = paletas.length + 1;
-  newPaleta.id = newId;
-  console.log(newPaleta.sabor === undefined);
+const createPaletaService = async (newPaleta) => {
   if (newPaleta === undefined) {
     throw new Error({ message: 'Nehum dado recebido' });
   }
@@ -56,23 +31,32 @@ const createPaletaService = (newPaleta) => {
   if (newPaleta.preco <= 0) {
     throw new Error({ message: 'O preço deve ser maior do que zero' });
   }
-  paletas.push(newPaleta);
-  return newPaleta;
-};
-
-const updatePaletaService = (id, paletaEdited) => {
-  paletaEdited['id'] = id;
-  const paletaIndex = paletas.findIndex((paleta) => paleta.id == id);
-  if (paletaIndex === undefined) {
-    return { message: 'Nenhuma paleta encontrada' };
+  if (newPaleta.descricao === undefined) {
+    throw new Error({ message: 'Descrição deve ser preenchida' });
   }
-  paletas[paletaIndex] = paletaEdited;
-  return paletaEdited;
+
+  try {
+    await paleta.create(newPaleta);
+    return newPaleta;
+  } catch (err) {
+    console.log(err);
+    throw new Error({ message: err });
+  }
 };
 
-const deletePaletaService = (id) => {
-  const paletaIndex = paletas.findIndex((paleta) => paleta.id == id);
-  return paletas.splice(paletaIndex, 1);
+const updatePaletaService = async (id, paletaEdited) => {
+  const paletaById = await paleta.findByIdAndUpdate(id, paletaEdited);
+  console.log(paletaById);
+  if (paletaById === undefined) {
+    throw new Error({ message: 'Nenhuma paleta corresponde a esse id' });
+  }
+  return paletaById;
+};
+
+const deletePaletaService = async (id) => {
+  const paletaById = await paleta.findByIdAndDelete(id);
+  console.log(paletaById);
+  return { message: 'Paleta deletada com sucesso' };
 };
 
 module.exports = {
