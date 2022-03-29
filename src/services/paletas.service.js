@@ -1,20 +1,23 @@
 const paleta = require('../utils/models/paletaSchema');
 
 const findPaletasService = async () => {
-  const paletas = await paleta.find();
-  if (paletas !== undefined) {
-    return paletas;
-  } else {
-    throw new Error({ message: 'Erro ao encontrar as paletas' });
+  try {
+    const paletas = await paleta.find();
+    if (paletas !== undefined) {
+      return paletas;
+    } else {
+      throw new Error({ message: 'Erro ao encontrar as paletas' });
+    }
+  } catch (err) {
+    console.log(err);
   }
 };
 
 const findPaletaByIdService = async (id) => {
   const paletaById = await paleta.findById(id);
   console.log(paletaById);
-  if (paletaById === undefined) {
-    console.log('Nenhuma paleta foi encontrada');
-    return undefined;
+  if (!paletaById) {
+    throw new Error({ message: 'Nenhuma paleta foi encontrada' });
   }
 
   return paletaById;
@@ -45,18 +48,27 @@ const createPaletaService = async (newPaleta) => {
 };
 
 const updatePaletaService = async (id, paletaEdited) => {
-  const paletaById = await paleta.findByIdAndUpdate(id, paletaEdited);
-  console.log(paletaById);
-  if (paletaById === undefined) {
-    throw new Error({ message: 'Nenhuma paleta corresponde a esse id' });
+  try {
+    if (!paletaEdited.sabor && !paletaEdited.descricao && !paletaEdited.foto) {
+      throw new Error({ message: 'Erro não recebemos nenhuma paleta' });
+    }
+
+    const paletaById = await paleta.findByIdAndUpdate(id, paletaEdited);
+    return paletaById;
+  } catch (err) {
+    console.log(err);
+    throw new Error(err);
   }
-  return paletaById;
 };
 
 const deletePaletaService = async (id) => {
-  const paletaById = await paleta.findByIdAndDelete(id);
-  console.log(paletaById);
-  return { message: 'Paleta deletada com sucesso' };
+  try {
+    const paletaById = await paleta.findByIdAndDelete(id);
+
+    return { message: 'Paleta deletada com sucesso' };
+  } catch (err) {
+    throw new Error({ message: 'Não foi possivel deletar a paleta!!' });
+  }
 };
 
 module.exports = {
