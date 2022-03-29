@@ -8,6 +8,7 @@ const paletaSchema = new Schema({
   descricao: { type: String, required: true },
   foto: { type: String, required: true },
   preco: { type: Number, required: true },
+  moreInfos: { type: Object, required: true },
   created: { type: Date, default: Date.now() },
 });
 
